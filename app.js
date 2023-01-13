@@ -4,7 +4,9 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let app = express();
 
-var items = [];
+let items = [];
+let workItems = [];
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({
@@ -22,7 +24,7 @@ app.get("/", function(req, res) {
   };
   var day = today.toLocaleDateString("en-US", options);
   res.render("list", {
-    kindOfDay: day,
+    listTitle: day,
     newListItems: items
   });
 });
@@ -33,14 +35,36 @@ app.get("/", function(req, res) {
 
 app.post('/', function(req, res) {
 
-  var item = req.body.newItem;
-  items.push(item);
+  let item = req.body.newItem;
 
+  if (req.body.list === "Work") {
 
-  res.redirect("/");
+    workItems.push(item);
+
+  } else {
+    items.push(item);
+    res.redirect("/");
+  }
 
 });
 
+
+app.get("/work", function(req, res) {
+  res.render("list", {
+    listTitle: "Work List",
+    newListItems: workItems
+  });
+})
+
+app.get("/about", function(req, res){
+res.render("about");
+});
+
+app.post("/work", function(req, res) {
+  let item = req.body.newItem;
+  workItems.push(item);
+  res.redirect("/work");
+});
 
 
 
