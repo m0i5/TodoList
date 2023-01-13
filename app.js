@@ -1,11 +1,15 @@
 //jshint esversion:6
 
-let express = require("express");
-let bodyParser = require("body-parser");
-let app = express();
+const express = require("express");
+const bodyParser = require("body-parser");
+const date = require(__dirname + "/date.js")
 
-let items = [];
-let workItems = [];
+
+const app = express();
+
+
+const items = [];
+const workItems = [];
 
 app.set('view engine', 'ejs');
 
@@ -16,13 +20,8 @@ app.use(express.static("public"));
 
 app.get("/", function(req, res) {
 
-  var today = new Date();
-  var options = {
-    weekday: "long",
-    day: "numeric",
-    month: "long"
-  };
-  var day = today.toLocaleDateString("en-US", options);
+let day = date.getDay;
+
   res.render("list", {
     listTitle: day,
     newListItems: items
@@ -56,8 +55,8 @@ app.get("/work", function(req, res) {
   });
 })
 
-app.get("/about", function(req, res){
-res.render("about");
+app.get("/about", function(req, res) {
+  res.render("about");
 });
 
 app.post("/work", function(req, res) {
