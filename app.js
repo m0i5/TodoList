@@ -3,10 +3,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const date = require(__dirname + "/date.js")
-
-
 const app = express();
-
+const submitBtn = document.querySelector('#submit-btn');
 
 const items = [];
 const workItems = [];
@@ -18,6 +16,15 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 
+
+
+submitBtn.addEventListener('click', (e) => {
+   e.preventDefault();
+   const inputValue = document.querySelector('input[name=""]').value;
+   console.log(inputValue);
+});
+
+
 app.get("/", function(req, res) {
 
 let day = date.getDay;
@@ -27,8 +34,6 @@ let day = date.getDay;
     newListItems: items
   });
 });
-
-
 
 
 
