@@ -2,9 +2,10 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const submitBtn = document.querySelector('#submit-btn');
 const date = require(__dirname + "/date.js")
 const app = express();
-const submitBtn = document.querySelector('#submit-btn');
+
 
 const items = [];
 const workItems = [];
